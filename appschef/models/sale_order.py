@@ -9,11 +9,20 @@ class SaleOrderLine(models.Model):
     def _compute_com_amount(self):
         for rec in self:
             if rec.product_id and rec.order_id and rec.order_id.employee_id:
-                records = rec.env['appschef.list.rule'].search([
-                    ('product_id', '=', rec.product_id.id),
-                    ('employee_id','=', rec.order_id.employee_id.id)])
-                if records :
-                    rec.com_amount = records.percentage*rec.price_total/100 
+                employee = rec.order_id.employee_id
+                com_rules = employee.com_rule_ids  
+                
+                matching_rule = None
+                for com_rule in com_rules:
+                    for rule in com_rule.list_rule_ids:
+                        if rule.product_id == rec.product_id:
+                            matching_rule = rule
+                            break 
+                    if matching_rule:
+                        break 
+                
+                if matching_rule:
+                    rec.com_amount = matching_rule.percentage * rec.price_total / 100
                 else:
                     rec.com_amount = 0.0
             else:

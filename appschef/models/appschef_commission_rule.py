@@ -5,11 +5,18 @@ class CommissionRule(models.Model):
     _name = 'appschef.commission.rule'
     _description = 'Rule for product to give commission to employee'
 
-    com_name = fields.Char(string="Commission Name")
+    name = fields.Char(string="Commission Name")
     list_rule_ids = fields.One2many(
         'appschef.list.rule',
         'com_rule_id',
         string='List Rule'
+    )
+    employee_ids = fields.Many2many(
+        'appschef.employee',
+        'employee_com_rule_rel',
+        'employee_id',
+        'com_rule_id',
+        string='Related Employees'
     )
     def action_add_rule(self):
         return {
@@ -36,12 +43,6 @@ class ListRule(models.Model):
     product_id = fields.Many2one(
         'product.product',
         string='Product',
-        ondelete='cascade',
-        required=True
-    )
-    employee_id = fields.Many2one(
-        'appschef.employee',
-        string='Employee',
         ondelete='cascade',
         required=True
     )

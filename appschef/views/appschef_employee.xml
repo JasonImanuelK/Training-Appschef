@@ -14,6 +14,7 @@
                         <field name="gender"/>
                         <field name="date_of_birth"/>
                         <field name="project_ids" widget="many2many_tags"/>
+                        <field name="com_rule_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>

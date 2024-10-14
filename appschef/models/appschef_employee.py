@@ -27,6 +27,7 @@ class Employee(models.Model):
         string='Gender', 
         required=True)
     date_of_birth = fields.Date(string='Date of Birth', required=True)
+
     project_ids = fields.Many2many(
         'appschef.project',
         'employee_project_rel',
@@ -34,16 +35,21 @@ class Employee(models.Model):
         'employee_id',
         string='Related Projects'
     )
-    list_rule_ids = fields.One2many(
-        'appschef.list.rule',
+
+    com_rule_ids = fields.Many2many(
+        'appschef.commission.rule',
+        'employee_com_rule_rel',
+        'com_rule_id',
         'employee_id',
-        string='List Rule'
+        string="Related Rules",
+        required= False
     )
     history_com_ids = fields.One2many(
         'appschef.history.commission',
         'employee_id',
         string='List History Commission'
     )
+
     sale_order_ids = fields.One2many(
         'sale.order',
         'employee_id',

@@ -5,13 +5,11 @@ class CommissionRuleWizard(models.TransientModel):
     _description = 'Wizard to create Commission Rules'
 
     product_id = fields.Many2one('product.product', string='Product', required=True)
-    employee_id = fields.Many2one('appschef.employee', string='Employee', required=True)
     percentage = fields.Float(string='Commission Percentage', required=True)
 
     def create_commission_rule(self):
         self.env['appschef.list.rule'].create({
             'product_id': self.product_id.id,
-            'employee_id': self.employee_id.id,
             'percentage': self.percentage,
             'com_rule_id': self._context.get('com_rule_id')
         })
