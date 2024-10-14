@@ -8,7 +8,6 @@
                     <group>
                         <field name="product_id"/>
                         <field name="percentage"/>
-                        <field name="employee_id"/>
                     </group>
                     <footer>
                         <button string="Create" type="object" name="create_commission_rule" class="btn-primary"/>
