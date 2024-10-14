@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="view_form_project" model="ir.ui.view">
+            <field name="name">appschef.project.form</field>
+            <field name="model">appschef.project</field>
+            <field name="arch" type="xml">
+                <form string="Project">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="project_type"/>
+                            <field name="technologies"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_project" model="ir.ui.view" >
+            <field name="name">appchef.project.tree</field>
+            <field name="model">appschef.project</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="technologies"/>
+                </tree>
+            </field>
+        </record> 
+
+        <record id="action_tree_project" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="res_model">appschef.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_tree_project"/>
+            <field name="target">current</field>
+        </record> 
+
+    </data>
+</odoo>

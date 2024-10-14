@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_employee_position">
+            <field name="name">Employee Position</field>
+            <field name="description">User access level for job position</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="group_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_employee_position"/>
+        </record>
+
+        <record id="group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_employee_position"/>
+        </record>
+    </data>
+</odoo>

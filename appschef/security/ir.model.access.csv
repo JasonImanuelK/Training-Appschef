@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_appschef_employee,appschef.employee,model_appschef_employee,base.group_user,1,1,1,1
+access_appschef_project,appschef.project,model_appschef_project,base.group_user,1,1,1,1
+access_appschef_daily_report,appschef.daily.report,model_appschef_daily_report,base.group_user,1,1,1,1
+access_appschef_list_reports,appschef.list.reports,model_appschef_list_reports,base.group_user,1,1,1,1
+access_appschef_history_commission,appschef.history.commission,model_appschef_history_commission,base.group_user,1,1,1,1
+access_appschef_commission_rule,appschef.commission.rule,model_appschef_commission_rule,base.group_user,1,1,1,1
+access_appschef_list_rule,appschef.list.rule,model_appschef_list_rule,base.group_user,1,1,1,1
+access_commission_rule_wizard,commission_rule_wizard,model_commission_rule_wizard,base.group_user,1,1,1,1

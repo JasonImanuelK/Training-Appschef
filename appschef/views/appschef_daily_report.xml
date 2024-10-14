@@ -1,0 +1,160 @@
+<odoo>
+    <data>
+        <record id="seq_daily_report" model="ir.sequence">
+            <field name="name">Daily Report Sequence</field>
+            <field name="code">appschef.daily.report</field>
+            <field name="prefix">DR</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="view_tree_daily_report" model="ir.ui.view">
+            <field name="name">appschef.daily.report.tree</field>
+            <field name="model">appschef.daily.report</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="report_number"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <template id="report_daily_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <p><h2>Report # <span t-field="doc.report_number"/></h2></p>
+                            
+                            <div id="informations" class="row mt-3 mb-1">
+                                <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" name="report_date">
+                                    <strong>Report Date:</strong><br/>
+                                    <span t-field="doc.date">2023-09-12</span>
+                                </div>
+                                <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" name="employee_name">
+                                    <strong>Employee:</strong><br/>
+                                    <span t-field="doc.name.name">Employee Name</span>
+                                </div>
+                            </div>
+
+                            <t t-if="doc.list_report_ids">
+                                <br />
+                                <br />
+                                <t t-set="unique_projects" t-value="set()"/>
+
+                                <table class="table table-sm o_main_table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-start"><strong>Related Projects</strong></th>
+                                            <th class="text-end"><strong>Summary</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <t t-foreach="doc.list_report_ids" t-as="list_report">
+                                            <t t-set="unique_projects" t-value="unique_projects | {list_report.project_id.name}"/>
+                                            <tr>
+                                                <td class="text-start">
+                                                    <span t-field="list_report.project_id.name"/>
+                                                </td>
+                                                <td class="text-end o_price_total">
+                                                    <span t-field="list_report.summary"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <p style="text-align: right"><strong>Projects :</strong> <span t-esc="len(unique_projects)"/></p>
+                                <br />
+                            </t>
+                            <hr />
+                            <t t-if="doc.name.manager">
+                                <div style="text-align: right;">
+                                    <p style="padding: 5px; margin: 0 auto;display: inline-block;text-align: center;">
+                                        Diketahui oleh,<br/><br/><br/>
+                                        <span t-field="doc.name.manager"></span><br/>
+                                    </p>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_daily_report" model="ir.actions.report">
+            <field name="name">Daily Report</field>
+            <field name="model">appschef.daily.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">appschef.report_daily_report</field>
+            <field name="report_file">appschef.report_daily_report</field>
+            <field name="print_report_name">"Daily Report - %s" % (object.report_number)</field>
+            <field name="binding_model_id" ref="appschef.model_appschef_daily_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="view_daily_report_form" model="ir.ui.view">
+            <field name="name">appschef.daily.report.form</field>
+            <field name="model">appschef.daily.report</field>
+            <field name="arch" type="xml">
+                <form string="Daily Report">
+                    <header>
+                        <button 
+                            name="action_submit" 
+                            type="object" 
+                            string="Submit" 
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                        <button 
+                            name="action_validate" 
+                            type="object" 
+                            string="Validate"
+                            class="btn-primary"
+                            groups="appschef.group_manager"
+                            invisible="state != 'submitted'"/>
+                        <button 
+                            name="action_invalidate" 
+                            type="object" 
+                            string="Invalidate"
+                            class="btn-secondary"
+                            groups="appschef.group_manager"
+                            invisible="state != 'validated'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,validated"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="report_number" readonly="1" />
+                            <field name="date"/> 
+                            <field name="name"/> 
+                        </group>
+                        <notebook>
+                            <page string="Reports">
+                                <field name="list_report_ids">
+                                    <tree editable="bottom" style="width: 100%;">
+                                        <field name="project_id" string="Related Projects">
+                                            <tree editable="bottom">
+                                                <field name="name" string="Project Name"/>
+                                            </tree>
+                                        </field>
+                                        <field name="summary" string="Summary"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_tree_daily_report" model="ir.actions.act_window">
+            <field name="name">Daily Reports</field>
+            <field name="res_model">appschef.daily.report</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_tree_daily_report"/>
+            <field name="target">current</field>
+        </record>
+        
+    </data>
+</odoo>

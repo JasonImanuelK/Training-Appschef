@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="employee_id" colspan="2" readonly="state != 'draft'"/>
+                    <field name="have_com" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//page[@name='order_lines']//tree/field[@name='price_total']" position="after">
+                    <field name="com_amount" readonly="1" optional="hide"/>
+                </xpath>
+
+                <xpath expr="//field[@name='tax_totals']" position="after">
+                    <field name="total_com" invisible="not have_com" colspan="2" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
