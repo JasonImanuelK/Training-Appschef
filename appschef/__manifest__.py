@@ -27,6 +27,7 @@ Long description of module's purpose
         'views/appschef_employee.xml',
         'views/appschef_project.xml',
         'wizard/commission_rule_wizard.xml',
+        'wizard/report_history_commission.xml',
         'views/appschef_commission_rule.xml',
         'views/appschef_history_commission.xml',
         'views/appschef_daily_report.xml',
@@ -37,5 +38,11 @@ Long description of module's purpose
     'demo': [
         'demo/demo.xml',
     ],
+
+    'assets': {
+        'web.assets_backend': [
+            'appschef/static/src/js/action_manager.js'
+        ]
+    }
 }
 

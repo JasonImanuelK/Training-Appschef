@@ -7,3 +7,4 @@ access_appschef_history_commission,appschef.history.commission,model_appschef_hi
 access_appschef_commission_rule,appschef.commission.rule,model_appschef_commission_rule,base.group_user,1,1,1,1
 access_appschef_list_rule,appschef.list.rule,model_appschef_list_rule,base.group_user,1,1,1,1
 access_commission_rule_wizard,commission_rule_wizard,model_commission_rule_wizard,base.group_user,1,1,1,1
+access_report_history_commission,appschef.report.history,model_appschef_report_history,base.group_user,1,1,1,1
