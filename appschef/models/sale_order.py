@@ -35,8 +35,7 @@ class SaleOrder(models.Model):
     employee_id = fields.Many2one(
         'appschef.employee',
         string='Employee',
-        ondelete='cascade',
-        required=True
+        ondelete='cascade'
     )
     have_com = fields.Boolean(compute="_check_commission", default=False)
 

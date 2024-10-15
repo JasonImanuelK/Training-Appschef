@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="view_report_history_wizard_form" model="ir.ui.view">
+            <field name="name">appschef.report.history.form</field>
+            <field name="model">appschef.report.history</field>
+            <field name="arch" type="xml">
+                <form string="Download Xlsx">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="project_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button string="Create" type="object" name="action_report_xlsx" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_report_history_commission" model="ir.actions.act_window">
+            <field name="name">Report History Commission</field>
+            <field name="res_model">appschef.report.history</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_report_history_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
