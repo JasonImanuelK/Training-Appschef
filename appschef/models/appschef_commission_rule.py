@@ -11,13 +11,6 @@ class CommissionRule(models.Model):
         'com_rule_id',
         string='List Rule'
     )
-    employee_ids = fields.Many2many(
-        'appschef.employee',
-        'employee_com_rule_rel',
-        'employee_id',
-        'com_rule_id',
-        string='Related Employees'
-    )
     def action_add_rule(self):
         return {
             'name': _('Insert Rule'),
